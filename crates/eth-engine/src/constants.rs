@@ -64,8 +64,12 @@ pub const ENGINE_EXCHANGE_CAPABILITIES_TIMEOUT: Duration = Duration::from_secs(1
 // pub const ENGINE_GET_CLIENT_VERSION_TIMEOUT: Duration = Duration::from_secs(1);
 // pub const ENGINE_GET_BLOBS_TIMEOUT: Duration = Duration::from_secs(1);
 
-// Ethereum API timeouts
-pub const ETH_DEFAULT_TIMEOUT: Duration = Duration::from_secs(1);
+// Ethereum API timeouts.
+//
+// Validator-set and consensus-params eth_call share the EL with block
+// execution. 1s fails while a block is being applied, the retries run out,
+// and the process exits. Same 8s backstop as the engine calls above.
+pub const ETH_DEFAULT_TIMEOUT: Duration = Duration::from_secs(8);
 pub const ETH_BATCH_REQUEST_TIMEOUT: Duration = Duration::from_secs(30);
 
 // IPC client-level timeout (upper-bound safety net set at jsonrpsee Client construction)
